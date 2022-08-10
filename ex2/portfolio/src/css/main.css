@@ -1,0 +1,15 @@
+nav ul{
+    display: flex;
+    justify-content: flex-start;
+}
+ul{
+    list-style: none;
+}
+.images{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.active{
+    background-color: #D3D3D3;
+}
