@@ -11,6 +11,11 @@ function Form(props) {
     const submitStep = evt => {
       evt.preventDefault()
       addStep(form)
+      setForm(() => ({
+        id: null,
+        date: '',
+        distance: 0
+      }))
     }
 
     const changeStep = (evt) => {

@@ -12,7 +12,7 @@ function App() {
   const getRgb = (hex) =>{
     let check = true
     let rgb = hex.slice(1).match(/.{1,2}/g).map(item => {
-      if (!parseInt(item, 16)) {
+      if (parseInt(item, 16) === NaN) {
         check = false
       }
        return parseInt(item, 16)
@@ -53,7 +53,7 @@ function App() {
   return (
     <div className="App">
       <Container>
-        <input name="name" type="text" value={form.name} onChange={changeColor}/>
+        <input name="name" type="text" value={form.name} onChange={changeColor} placeholder="Введите hex"/>
         <input name="convert" type="text" value={form.convert} disabled/>
       </Container>
     </div>

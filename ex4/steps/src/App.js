@@ -11,7 +11,7 @@ function App() {
     let stepDate = steps.find((item) => {
       let date1 = new Date(item.date)
       let date2 = new Date(step.date)
-      return date1.getFullYear == date2.getFullYear && date1.getMonth == date2.getMonth && date1.getDay == date2.getDay
+      return date1.getFullYear() == date2.getFullYear() && date1.getMonth() == date2.getMonth() && date1.getDay() == date2.getDay()
     })
     if (stepDate) {
       let newSteps = steps.map((item) => {
@@ -20,10 +20,9 @@ function App() {
         }
         return item
       })
-      setSteps(prevSteps => [...newSteps])
+      setSteps(() => [...newSteps])
     } else {
-      setSteps(prevSteps => [...prevSteps, new StepModel(nanoid(), step.date, step.distance)])
-      setSteps(prevSteps => prevSteps.sort((a, b) => new Date(b.date) - new Date(a.date)))
+      setSteps(prevSteps => [...prevSteps, new StepModel(nanoid(), step.date, step.distance)].sort((a, b) => new Date(b.date) - new Date(a.date)))
     }
     
   }
