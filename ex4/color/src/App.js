@@ -12,7 +12,7 @@ function App() {
   const getRgb = (hex) =>{
     let check = true
     let rgb = hex.slice(1).match(/.{1,2}/g).map(item => {
-      if (parseInt(item, 16) === NaN) {
+      if (isNaN(parseInt(item, 16))) {
         check = false
       }
        return parseInt(item, 16)
