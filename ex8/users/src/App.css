@@ -1,0 +1,16 @@
+.App{
+  display: flex;
+}
+.item-list{
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+}
+
+input:hover{
+  cursor: pointer;
+}
+
+.text-strike{
+  background-color: darkcyan;
+}
