@@ -1,24 +1,38 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { changeServiceField, addService } from '../actions/actionCreators';
+import { connect, useSelector } from 'react-redux'
+import { changeServiceField, addService, editService, cleanServiceField, filterService } from '../actions/actionCreators';
 
 function Add(props) {
     const {item} = props;
+    const find = useSelector(state => state.serviceFilter);
     const handleChange = evt => {
         const {name, value} = evt.target;
         props.onChange(name, value);
     }
     const handleSubmit = evt => {
         evt.preventDefault();
-        props.onSave(item.name, item.price);
+        if (evt.target.id == 'Save') {
+            if (!item.id) {
+                props.onSave(item.name, item.price);
+                props.onClean();
+            }else {
+                props.onEdit(item.id, item.name, item.price);
+                props.onClean();
+            }
+        } else {
+            props.onClean();
+        }
+        props.onFilter(find.find);
+        
     }
 
     return ( 
-        <form onSubmit={handleSubmit}>
+        <form >
             <input name='name' onChange={handleChange} value={item.name} />
-            <input name='price' onChange={handleChange} value={item.price} />
-            <button type='submit'>Save</button>
+            <input type='number' name='price' onChange={handleChange} value={item.price} />
+            <button id="Save" type='submit'onClick={handleSubmit}>Save</button>
+            <button id="Clean" type='submit' onClick={handleSubmit}>Clean</button>
         </form>
     )
 }
@@ -26,9 +40,10 @@ function Add(props) {
 Add.propTypes = {
     item: PropTypes.shape({
             name: PropTypes.string,
-            price: PropTypes.string,
+            price: PropTypes.number,
         }).isRequired,
         onSave: PropTypes.func.isRequired,
+        onEdit: PropTypes.func.isRequired,
         onChange: PropTypes.func.isRequired,
 }
 const mapStateToProps = (state, ownProps) => {
@@ -38,7 +53,10 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (name, value) => dispatch(changeServiceField(name, value)),
+        onClean: () => dispatch(cleanServiceField()),
         onSave: (name, value) => dispatch(addService(name, value)),
+        onEdit: (id, name, value) => dispatch(editService(id, name, value)),
+        onFilter: (find) => dispatch(filterService(find)),
     }
 };
 
