@@ -8,17 +8,25 @@ function List() {
     const handleRemove = id => {
         dispatch(removeService(id));
     }
-    const handleEdit = (id, name, value) => {
-        dispatch(changeServiceField(name, value));
+    const handleEdit = (id, name, price) => {
+        dispatch(changeServiceField('name', name));
+        dispatch(changeServiceField('id', id));
+        dispatch(changeServiceField('price', price));
     }
 
     return (
         <ul>
-            {items.map(o => <li key={o.id}>
-                {o.name} {o.price}
-                <button onClick={() => handleEdit(o.id, o.name, o.price)}>edit</button>
-                <button onClick={() => handleRemove(o.id)}>✕</button>
-            </li>)}
+            {items.map(o => 
+                <div key={o.id}>
+                    {o.show &&
+                        <li>
+                            {o.name} {o.price}
+                            <button onClick={() => handleEdit(o.id, o.name, o.price)}>edit</button>
+                            <button onClick={() => handleRemove(o.id)}>✕</button>
+                        </li>
+                    }
+                </div>
+            )}
         </ul>
     )
 }
